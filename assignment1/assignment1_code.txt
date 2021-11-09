@@ -1,5 +1,4 @@
-על מנת להריץ את הקוד צריך פייתון מגרסא 3.5+ כדי לתמוך בטייפים בפונקציות.  
-
+# To run the code you should have python version >= 3.5
 
 import math
 
