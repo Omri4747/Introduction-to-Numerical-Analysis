@@ -3,17 +3,17 @@ import matplotlib.pyplot as plt
 import math
 
 
-def bisection_method(f, a, b, tolerance):
+def bisection_method(f_bisection, a, b, tolerance):
     """
-    :param f: function to determine the find the root of it
+    :param f_bisection: function to determine the find the root of it
     :param a: left limit of the domain
     :param b: right limit of the domain
     :param tolerance: the tolerance which should suffice |z-a'|<tolerance where a' is the root and z is the returned value
     :return: z s.t |z-a'|<tolerance, # of iterations to find the root
     """
     i = 0
-    fb = f(b)
-    fa = f(a)
+    fb = f_bisection(b)
+    fa = f_bisection(a)
     if fa * fb > 0:
         raise ValueError("f(a)*f(b) should be negative but is {0}".format(fa * fb))
     elif fa == 0:
@@ -25,10 +25,10 @@ def bisection_method(f, a, b, tolerance):
     while math.fabs(a - b) >= limit:
         i += 1
         z = (a + b) / 2
-        fz = f(z)
+        fz = f_bisection(z)
         if fz == 0:
             return z, i
-        fa = f(a)
+        fa = f_bisection(a)
         if fa * fz < 0:
             b = z
         else:
@@ -37,17 +37,17 @@ def bisection_method(f, a, b, tolerance):
     return (a + b) / 2, i
 
 
-def regula_falsi(f, x0, x1, tolerance, goal):
+def regula_falsi(f_regula, x0, x1, tolerance, goal):
     """
-    :param f: function to determine the find the root of it
+    :param f_regula: function to determine the find the root of it
     :param x0: initial guess s.t f(x0)*f(x1) < 0
     :param x1: initital guess s.t f(x0)*f(x1) < 0
     :param tolerance: the tolerance to be clos to the root
     :param goal: the goal to return
     :return: x s.t |f(x)| < tolerance
     """
-    fx0 = f(x0)
-    fx1 = f(x1)
+    fx0 = f_regula(x0)
+    fx1 = f_regula(x1)
     if fx0 == 0:
         return x0, 0
     elif fx1 == 0:
@@ -60,11 +60,11 @@ def regula_falsi(f, x0, x1, tolerance, goal):
     xi = float('inf')
     while math.fabs(xi - goal) >= tolerance:
         i += 1
-        fxi_minus_1 = f(xi_minus_1)
-        delta_f = fxi_minus_1 - f(xi_minus_2)
+        fxi_minus_1 = f_regula(xi_minus_1)
+        delta_f = fxi_minus_1 - f_regula(xi_minus_2)
         delta_xi = xi_minus_1 - xi_minus_2
         xi = xi_minus_1 - fxi_minus_1 * delta_xi / delta_f
-        fxi = f(xi)
+        fxi = f_regula(xi)
         if fxi == 0:
             return xi, i
         if fxi * fxi_minus_1 < 0:
@@ -80,14 +80,14 @@ def f(x):
 
 
 def main():
-    #start a
+    # start a
     x0 = -1
     x1 = 4
     tolerance = 10 ** -8
     bisection_result, bisection_iter_num = bisection_method(f, x0, x1, tolerance)
     print("got result {0} in bisection method with {1} iterations.".format(bisection_result, bisection_iter_num))
-    #finish a
-    #start b
+    # finish a
+    # start b
     tolerance_axis = []
     bisection_iterations_axis = []
     falsi_iterations_axis = []
@@ -106,7 +106,7 @@ def main():
     plt.title("Regula Falsi and Bisection methods iterations per 10**d comparison")
     plt.legend()
     plt.show()
-    #finish b
+    # finish b
 
 
 if __name__ == '__main__':
