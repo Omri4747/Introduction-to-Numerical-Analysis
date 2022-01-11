@@ -1,6 +1,19 @@
 import math
 
 
+def calculate_integral_num_with_m(m):
+    ln2 = math.log(2)  # base for math.log is e
+    two_m = 2 * m
+    ln2_div_2m = ln2 / two_m
+    result = ln2_div_2m
+    acc = 0
+    for i in range(1, m - 1):
+        i_div_m = i / m
+        acc += math.log(1 + i_div_m)
+    result += acc / m
+    return result
+
+
 def euler_method(f, h, base_case, num_of_iterations):
     '''
 
@@ -61,15 +74,13 @@ def find_minimal_for_epsilon(f, epsilon):
     return i
 
 
-if __name__ == "__main__":
+def print_rk2_euler():
     def f(x, y):
         return x + y
-
 
     def exact(x):
         e = math.e
         return x, 2 * (e ** x) - x - 1
-
 
     euler_results = []
     rk_results = []
@@ -122,3 +133,13 @@ if __name__ == "__main__":
         rk = rk_results[i]
         exact_result = exact_results[i]
         print("x={:.1f}\t{:.8f}\t\t\t{:.8f}".format(0.1 * i, exact_result - euler, exact_result - rk))
+
+
+def print_integral_m():
+    m = 13
+    print(calculate_integral_num_with_m(m))
+
+
+if __name__ == "__main__":
+    print_integral_m()
+    print_rk2_euler()
