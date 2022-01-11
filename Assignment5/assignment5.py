@@ -9,6 +9,7 @@ def calculate_integral_num_with_m(m):
     acc = 0
     for i in range(1, m - 1):
         i_div_m = i / m
+        i_div_m = i_div_m ** 2
         acc += math.log(1 + i_div_m)
     result += acc / m
     return result
